@@ -15,13 +15,13 @@ function tearDown()
 
 function testArrayIsEmpty()
 {
-	empty_array=()
-	not_empty_array=("aa" "bb" "cc")
+	local empty_array=()
+	local not_empty_array=("aa" "bb" "cc")
 
 	_array_is_empty "empty_array"
-	empty_result=$?
+	local empty_result=$?
 	_array_is_empty "not_empty_array"
-	not_empty_result=$?
+	local not_empty_result=$?
 
 	assertEquals "The empty array should be empty" 1 $empty_result
 	assertEquals "The not empty array should not be empty" 0 $not_empty_result
@@ -29,15 +29,34 @@ function testArrayIsEmpty()
 
 function testArrayContain()
 {
-	test_array=("aa" "bb")
+	local test_array=("aa" "bb")
 
 	_array_contain "test_array" "aa"
-	contain_result=$?
+	local contain_result=$?
 	_array_contain "test_array" "cc"
-	not_contain_result=$?
+	local not_contain_result=$?
 
 	assertEquals "The test array should contain (aa)" 1 $contain_result
 	assertEquals "The test array should not contain (cc)" 0 $not_contain_result
+}
+
+function testArrayContainArray()
+{
+	local test_array=("aa" "bb" "cc" "dd" "ee")
+	local test_sub_array1=("bb" "ee")
+	local test_sub_array2=("cc" "ff")
+	local test_sub_array3=("ff" "gg")
+
+	_array_contain_array "test_array" "test_sub_array1"
+	local contain_result=$?
+	_array_contain_array "test_array" "test_sub_array2"
+	local not_contain_result1=$?
+	_array_contain_array "test_array" "test_sub_array3"
+	local not_contain_result2=$?
+
+	assertEquals "The test array should contain (bb ee)" 1 $contain_result
+	assertEquals "The test array should not contain (cc ff)" 0 $not_contain_result1
+	assertEquals "The test array should not contain (ff gg)" 0 $not_contain_result2
 }
 
 . ../lib/shunit2
