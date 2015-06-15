@@ -7,10 +7,23 @@ function _array_is_empty()
 		eval length=\${#$1[*]}
 		if [ $length == 0 ]; then
 			return 1
-		else 
-			return 0
 		fi
-	else
-		return 0
 	fi
+	return 0
+}
+
+function _array_contain()
+{
+	if [ $1 -a $2 ]; then
+		index=0
+		eval length=\${#$1[*]}
+		while [ $index -lt $length ]; do
+			eval item=\${$1[$index]}
+			if [ $item -a $item = $2 ]; then
+				return 1
+			fi
+			let index=$index+1
+		done
+	fi
+	return 0
 }
