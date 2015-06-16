@@ -45,3 +45,12 @@ function _array_contain_array()
 	fi
 	return 0
 }
+
+function _array_size()
+{
+	if [ $1 ]; then
+		eval local length=\${#$1[*]}
+		return $length
+	fi
+	return 0
+}

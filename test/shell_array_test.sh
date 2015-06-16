@@ -59,4 +59,14 @@ function testArrayContainArray()
 	assertEquals "The test array should not contain (ff gg)" 0 $not_contain_result2
 }
 
+function testArraySize()
+{
+	local test_array=("aa" "bb" "cc")
+
+	_array_size "test_array"
+	local size_result=$?
+
+	assertEquals "The test array size should is 3" 3 $size_result
+}
+
 . ../lib/shunit2
