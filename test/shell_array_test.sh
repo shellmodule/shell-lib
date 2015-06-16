@@ -69,4 +69,20 @@ function testArraySize()
 	assertEquals "The test array size should is 3" 3 $size_result
 }
 
+function testArrayGetValue()
+{
+	local test_array=("aa" "bb" "cc")
+
+	local aa_value
+	_array_get_value "test_array" "aa_value" 0
+	local bb_value
+	_array_get_value "test_array" "bb_value" 1
+	local cc_value
+	_array_get_value "test_array" "cc_value" 2
+
+	assertEquals "The second value of test_array should be (aa)" "aa" $aa_value
+	assertEquals "The second value of test_array should be (bb)" "bb" $bb_value
+	assertEquals "The second value of test_array should be (cc)" "cc" $cc_value
+}
+
 . ../lib/shunit2

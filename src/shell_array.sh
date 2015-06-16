@@ -54,3 +54,13 @@ function _array_size()
 	fi
 	return 0
 }
+
+function _array_get_value()
+{
+	if [ $1 -a $2 -a $3 ]; then
+		eval local length=\${#$1[*]}
+		if [ $3 -ge 0 -a $3 -lt $length ]; then
+			eval $2=\${$1[$3]}
+		fi
+	fi
+}
