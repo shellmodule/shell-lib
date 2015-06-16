@@ -80,9 +80,22 @@ function testArrayGetValue()
 	local cc_value
 	_array_get_value "test_array" "cc_value" 2
 
-	assertEquals "The second value of test_array should be (aa)" "aa" $aa_value
+	assertEquals "The first value of test_array should be (aa)" "aa" $aa_value
 	assertEquals "The second value of test_array should be (bb)" "bb" $bb_value
-	assertEquals "The second value of test_array should be (cc)" "cc" $cc_value
+	assertEquals "The third value of test_array should be (cc)" "cc" $cc_value
+}
+
+function testArrayGetIndex()
+{
+	local test_array=("aa" "bb" "cc")
+
+	local aa_index=$(_array_get_index "test_array" "aa")
+	local bb_index=$(_array_get_index "test_array" "bb")
+	local cc_index=$(_array_get_index "test_array" "cc")
+
+	assertEquals "The index of first value in test_array should be (0)" 0 $aa_index
+	assertEquals "The index of second value in test_array should be (1)" 1 $bb_index
+	assertEquals "The index of third value in test_array should be (2)" 2 $cc_index
 }
 
 . ../lib/shunit2

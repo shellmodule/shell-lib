@@ -64,3 +64,19 @@ function _array_get_value()
 		fi
 	fi
 }
+
+function _array_get_index()
+{
+	if [ $1 -a $2 ]; then
+		local index=0
+		eval local length=\${#$1[*]}
+		while [ $index -lt $length ]; do
+			eval local item=\${$1[$index]}
+			if [ $item -a $item = $2 ]; then
+				echo $index
+				break
+			fi
+			let index=$index+1
+		done
+	fi
+}
