@@ -6,10 +6,14 @@ function _array_is_empty()
 	if [ $1 ]; then
 		eval local length=\${#$1[*]}
 		if [ $length == 0 ]; then
-			return 1
+			echo true
+			return 0
+		else
+			echo false
+			return 2	
 		fi
 	fi
-	return 0
+	return 1
 }
 
 function _array_contain()
@@ -20,12 +24,15 @@ function _array_contain()
 		while [ $index -lt $length ]; do
 			eval local item=\${$1[$index]}
 			if [ $item -a $item = $2 ]; then
-				return 1
+				echo true
+				return 0
 			fi
 			let index=$index+1
 		done
+		echo false
+		return 2
 	fi
-	return 0
+	return 1
 }
 
 function _array_contain_array()
@@ -35,34 +42,40 @@ function _array_contain_array()
 		eval local length=\${#$2[*]}
 		while [ $index -lt $length ]; do
 			eval local item=\${$2[$index]}
-			_array_contain $1 $item
-			if [ $? -eq 0 ]; then
-				return 0
+			local contain_result=$(_array_contain $1 $item)
+			if [ $contain_result = false ]; then
+				echo false
+				return 2
 			fi
 			let index=$index+1
 		done
-		return 1
+		echo true
+		return 0
 	fi
-	return 0
+	return 1
 }
 
 function _array_size()
 {
 	if [ $1 ]; then
-		eval local length=\${#$1[*]}
-		return $length
+		eval echo \${#$1[*]}
+		return 0
 	fi
-	return 0
+	return 1
 }
 
 function _array_get_value()
 {
-	if [ $1 -a $2 -a $3 ]; then
+	if [ $1 -a $2 ]; then
 		eval local length=\${#$1[*]}
-		if [ $3 -ge 0 -a $3 -lt $length ]; then
-			eval $2=\${$1[$3]}
+		if [ $2 -ge 0 -a $2 -lt $length ]; then
+			eval echo \${$1[$2]}
+			return 0
+		else
+			return 2
 		fi
 	fi
+	return 1
 }
 
 function _array_get_index()
@@ -74,9 +87,12 @@ function _array_get_index()
 			eval local item=\${$1[$index]}
 			if [ $item -a $item = $2 ]; then
 				echo $index
-				break
+				return 0
 			fi
 			let index=$index+1
 		done
+		echo -1
+		return 2
 	fi
+	return 1
 }
