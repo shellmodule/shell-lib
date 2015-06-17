@@ -10,7 +10,7 @@ function _array_is_empty()
 			return 0
 		else
 			echo false
-			return 2	
+			return 2
 		fi
 	fi
 	return 1
