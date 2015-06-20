@@ -99,9 +99,28 @@ function _array_get_index()
 
 function _array_add()
 {
-	if [ $1 -a $2 ];then
+	if [ $1 -a $2 ]; then
 		eval local length=\${#$1[*]}
 		eval $1[$length]=$2
+		return 0
+	fi
+	return 1
+}
+
+function _array_add_array()
+{
+	if [ $1 -a $2 ]; then
+		local index=0
+		eval local source_last_index=\${#$1[*]}
+		eval local dest_length=\${#$2[*]}
+		while [ $index -lt $dest_length ]; do
+			eval local item=\${$2[$index]}
+			if [ $item ]; then
+				eval $1[$source_last_index]=$item
+				let source_last_index=$source_last_index+1
+			fi
+			let index=$index+1
+		done
 		return 0
 	fi
 	return 1

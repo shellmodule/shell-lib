@@ -100,4 +100,15 @@ function testArrayAdd()
 	assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
 }
 
+function testArrayAddArray()
+{
+	test_array=("aa")
+	test_sub_array=("bb" "cc")
+
+	_array_add_array "test_array" "test_sub_array"
+
+	assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
+	assertEquals "The third value in test_array should be (cc)" "cc" ${test_array[2]}
+}
+
 . ../lib/shunit2
