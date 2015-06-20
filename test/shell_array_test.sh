@@ -91,4 +91,13 @@ function testArrayGetIndex()
 	assertEquals "The other index of the test_array should be (-1)" -1 $no_index
 }
 
+function testArrayAdd()
+{
+	test_array=("aa")
+
+	_array_add "test_array" "bb"
+
+	assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
+}
+
 . ../lib/shunit2

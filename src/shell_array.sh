@@ -96,3 +96,13 @@ function _array_get_index()
 	fi
 	return 1
 }
+
+function _array_add()
+{
+	if [ $1 -a $2 ];then
+		eval local length=\${#$1[*]}
+		eval $1[$length]=$2
+		return 0
+	fi
+	return 1
+}
