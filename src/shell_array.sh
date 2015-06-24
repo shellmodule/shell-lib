@@ -125,3 +125,32 @@ function _array_add_array()
 	fi
 	return 1
 }
+
+# private method
+function __array_move_next()
+{
+	if [ $1 ]; then
+		local move_index=0
+		local move_count=1
+		if [ $2 ]; then move_index=$2; fi
+		if [ $3 ]; then move_count=$3; fi
+		eval local length=\${#$1[*]}
+		if [ $move_index -ge $length -o $move_count -eq 0 ]; then return 2; fi
+
+		let local src_index=$length-1
+		let local move_start=$move_index+$move_count
+		let local des_index=$length+$move_count-1
+		while [ $des_index -ge $move_start ]; do
+			eval $1[$des_index]=\${$1[$src_index]}
+			let src_index=$src_index-1
+			let des_index=$des_index-1
+		done
+		local index=$move_index
+		while [ $index -lt $move_start ]; do
+			eval $1[$index]=""
+			let index=$index+1
+		done
+		return 0
+	fi
+	return 1
+}

@@ -93,7 +93,7 @@ function testArrayGetIndex()
 
 function testArrayAdd()
 {
-	test_array=("aa")
+	local test_array=("aa")
 
 	_array_add "test_array" "bb"
 
@@ -102,13 +102,68 @@ function testArrayAdd()
 
 function testArrayAddArray()
 {
-	test_array=("aa")
+	local test_array=("aa")
 	test_sub_array=("bb" "cc")
 
 	_array_add_array "test_array" "test_sub_array"
 
 	assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
 	assertEquals "The third value in test_array should be (cc)" "cc" ${test_array[2]}
+}
+
+# private method
+
+## "array move next"
+{
+	function testArrayMoveNext1()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_array=("" "aa" "bb" "cc")
+
+		__array_move_next "test_array"
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	function testArrayMoveNext2()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_array=("aa" "" "bb" "cc")
+
+		__array_move_next "test_array" 1
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	function testArrayMoveNext3()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_array=("aa" "" "" "bb" "cc")
+
+		__array_move_next "test_array" 1 2
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	function testArrayMoveNext4()
+	{
+		local test_array=("aa" "bb")
+		local expect_array=("aa" "bb")
+
+		__array_move_next "test_array" 2 1
+		local move_result=$?
+
+		assertEquals "The test_array should not be changed" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal (2)" 2 $move_result
+	}
+	function testArrayMoveNext5()
+	{
+		local test_array=("aa" "bb")
+		local expect_array=("aa" "bb")
+
+		__array_move_next "test_array" 1 0
+		local move_result=$?
+
+		assertEquals "The test_array should not be changed" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal (2)" 2 $move_result
+	}
 }
 
 . ../lib/shunit2
