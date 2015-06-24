@@ -101,7 +101,14 @@ function _array_add()
 {
 	if [ $1 -a $2 ]; then
 		eval local length=\${#$1[*]}
-		eval $1[$length]=$2
+		local insert_index=$length
+		if [ $3 ]; then
+			if [ $3 -ge 0 -a $3 -lt $length ]; then
+				insert_index=$3
+				__array_move_next $1 $insert_index
+			fi
+		fi
+		eval $1[$insert_index]=$2
 		return 0
 	fi
 	return 1
