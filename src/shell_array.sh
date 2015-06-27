@@ -117,14 +117,21 @@ function _array_add()
 function _array_add_array()
 {
 	if [ $1 -a $2 ]; then
-		local index=0
-		eval local source_last_index=\${#$1[*]}
+		eval local length=\${#$1[*]}
 		eval local dest_length=\${#$2[*]}
+		local insert_index=$length
+		if [ $3 ]; then
+			if [ $3 -ge 0 -a $3 -lt $length ]; then
+				insert_index=$3
+				__array_move_next $1 $insert_index $dest_length
+			fi
+		fi
+		local index=0
 		while [ $index -lt $dest_length ]; do
 			eval local item=\${$2[$index]}
 			if [ $item ]; then
-				eval $1[$source_last_index]=$item
-				let source_last_index=$source_last_index+1
+				eval $1[$insert_index]=$item
+				let insert_index=$insert_index+1
 			fi
 			let index=$index+1
 		done

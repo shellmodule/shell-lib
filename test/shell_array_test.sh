@@ -106,24 +106,39 @@ function testArrayGetIndex()
 	function testArrayAdd2()
 	{
 		local test_array=("aa" "bb")
+		local expect_array=("aa" "cc" "bb")
 
 		_array_add "test_array" "cc" 1
 
-		assertEquals "The first value in test_array should be (aa)" "aa" ${test_array[0]}
-		assertEquals "The second value in test_array should be (cc)" "cc" ${test_array[1]}
-		assertEquals "The third value in test_array should be (bb)" "bb" ${test_array[2]}
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
 	}
 }
 
-function testArrayAddArray()
+## "array add array"
 {
-	local test_array=("aa")
-	test_sub_array=("bb" "cc")
+	## "should add the array at the end of the array by default"
+	function testArrayAddArray1()
+	{
+		local test_array=("aa")
+		local test_sub_array=("bb" "cc")
+		local expect_array=("aa" "bb" "cc")
 
-	_array_add_array "test_array" "test_sub_array"
+		_array_add_array "test_array" "test_sub_array"
 
-	assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
-	assertEquals "The third value in test_array should be (cc)" "cc" ${test_array[2]}
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	## "should add the array on the point index"
+	function testArrayAddArray2()
+	{
+		local test_array=("aa" "bb")
+		local test_sub_array=("cc" "dd")
+		local expect_array=("aa" "cc" "dd" "bb")
+
+
+		_array_add_array "test_array" "test_sub_array" 1
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
 }
 
 # private method
