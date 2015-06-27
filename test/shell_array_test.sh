@@ -91,4 +91,114 @@ function testArrayGetIndex()
 	assertEquals "The other index of the test_array should be (-1)" -1 $no_index
 }
 
+## "array add"
+{
+	## "should add the value at end of the array by default"
+	function testArrayAdd1()
+	{
+		local test_array=("aa")
+
+		_array_add "test_array" "bb"
+
+		assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
+	}
+	## "should add the value on point index"
+	function testArrayAdd2()
+	{
+		local test_array=("aa" "bb")
+		local expect_array=("aa" "cc" "bb")
+
+		_array_add "test_array" "cc" 1
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+}
+
+## "array add array"
+{
+	## "should add the array at the end of the array by default"
+	function testArrayAddArray1()
+	{
+		local test_array=("aa")
+		local test_sub_array=("bb" "cc")
+		local expect_array=("aa" "bb" "cc")
+
+		_array_add_array "test_array" "test_sub_array"
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	## "should add the array on the point index"
+	function testArrayAddArray2()
+	{
+		local test_array=("aa" "bb")
+		local test_sub_array=("cc" "dd")
+		local expect_array=("aa" "cc" "dd" "bb")
+
+
+		_array_add_array "test_array" "test_sub_array" 1
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+}
+
+# private method
+
+## "array move next"
+{
+	## "should move all the values to next one step by default"
+	function testArrayMoveNext1()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_array=("" "aa" "bb" "cc")
+
+		__array_move_next "test_array"
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	## "should move the values from point index to next one step by default"
+	function testArrayMoveNext2()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_array=("aa" "" "bb" "cc")
+
+		__array_move_next "test_array" 1
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	## "should move the values from point index to next point steps"
+	function testArrayMoveNext3()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_array=("aa" "" "" "bb" "cc")
+
+		__array_move_next "test_array" 1 2
+
+		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+	## "should not move the values when the from index over the length of array."
+	function testArrayMoveNext4()
+	{
+		local test_array=("aa" "bb")
+		local expect_array=("aa" "bb")
+
+		__array_move_next "test_array" 2 1
+		local move_result=$?
+
+		assertEquals "The test_array should not be changed" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal (2)" 2 $move_result
+	}
+	## "should not move the values when the move count is zero."
+	function testArrayMoveNext5()
+	{
+		local test_array=("aa" "bb")
+		local expect_array=("aa" "bb")
+
+		__array_move_next "test_array" 1 0
+		local move_result=$?
+
+		assertEquals "The test_array should not be changed" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal (2)" 2 $move_result
+	}
+}
+
 . ../lib/shunit2
