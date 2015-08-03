@@ -134,10 +134,34 @@ function testArrayGetIndex()
 		local test_sub_array=("cc" "dd")
 		local expect_array=("aa" "cc" "dd" "bb")
 
-
 		_array_add_array "test_array" "test_sub_array" 1
 
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+	}
+}
+
+## "acquire a sub array"
+{
+	## "should get a sub array from current array by point index and length"
+	function testArraySubArray()
+	{
+		local test_array=("aa" "bb" "cc" "dd")
+		local expect_sub_array=("bb" "cc")
+
+		local result_sub_array=$(_array_sub_array "test_array" 1 2)
+
+		assertEquals "The result sub array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+
+	## "should get a sub array from current array by point from index"
+	function testArraySubArrayFrom()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("bb" "cc")
+
+		local result_sub_array=$(_array_sub_array_from "test_array" 1)
+
+		assertEquals "The result sub array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
 	}
 }
 

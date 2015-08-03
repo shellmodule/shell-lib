@@ -140,6 +140,29 @@ function _array_add_array()
 	return 1
 }
 
+function _array_sub_array()
+{
+	if [ $1 ]; then
+		eval local length=\${#$1[*]}
+		local to_length=$2+$3
+		let to_length=$to_length-1
+		if [ $to_length -gt $length ]; then $to_length=$length; fi
+		eval echo \${$1[*]:$2:$to_length}
+	fi
+	return 1
+}
+
+function _array_sub_array_from()
+{
+	if [ $1 ]; then
+		eval local length=\${#$1[*]}
+		if [ $2 -ge 0 -a $2 -lt $length ]; then
+			eval echo \${$1[*]:$2}
+		fi
+	fi
+	return 1
+}
+
 # private method
 function __array_move_next()
 {
