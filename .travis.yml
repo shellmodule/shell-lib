@@ -1,2 +1,8 @@
 before_script:
-	- echo "hello travis ci"
+	- echo "---------------start--------------"
+
+script:
+	- echo "hello"
+
+after_script:
+	- echo "-----------------end--------------"
