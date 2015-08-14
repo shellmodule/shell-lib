@@ -3,12 +3,12 @@
 
 . ../src/shell_file.sh
 
-function setUp()
+setUp()
 {
 	echo "before..."
 }
 
-function tearDown()
+tearDown()
 {
 	echo "after..."
 }
