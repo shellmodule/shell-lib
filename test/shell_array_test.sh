@@ -3,17 +3,17 @@
 
 . ../src/shell_array.sh
 
-setUp()
+function setUp()
 {
 	echo "before..."
 }
 
-tearDown()
+function tearDown()
 {
 	echo "after..."
 }
 
-testArrayIsEmpty()
+function testArrayIsEmpty()
 {
 	local empty_array=()
 	local not_empty_array=("aa" "bb" "cc")
@@ -25,7 +25,7 @@ testArrayIsEmpty()
 	assertEquals "The not empty array should not be empty" false $not_empty_result
 }
 
-testArrayContain()
+function testArrayContain()
 {
 	local test_array=("aa" "bb")
 
@@ -36,7 +36,7 @@ testArrayContain()
 	assertEquals "The test array should not contain (cc)" false $not_contain_result
 }
 
-testArrayContainArray()
+function testArrayContainArray()
 {
 	local test_array=("aa" "bb" "cc" "dd" "ee")
 	local test_sub_array1=("bb" "ee")
@@ -52,7 +52,7 @@ testArrayContainArray()
 	assertEquals "The test array should not contain (ff gg)" false $not_contain_result2
 }
 
-testArraySize()
+function testArraySize()
 {
 	local test_array=("aa" "bb" "cc")
 
@@ -61,7 +61,7 @@ testArraySize()
 	assertEquals "The test array size should is 3" 3 $size_result
 }
 
-testArrayGetValue()
+function testArrayGetValue()
 {
 	local test_array=("aa" "bb" "cc")
 
@@ -76,7 +76,7 @@ testArrayGetValue()
 	assertFalse "The other value of test_array should be empty" "[ $no_value ]"
 }
 
-testArrayGetIndex()
+function testArrayGetIndex()
 {
 	local test_array=("aa" "bb" "cc")
 
@@ -94,7 +94,7 @@ testArrayGetIndex()
 ## "array add"
 {
 	## "should add the value at end of the array by default"
-	testArrayAdd1()
+	function testArrayAdd1()
 	{
 		local test_array=("aa")
 
@@ -103,7 +103,7 @@ testArrayGetIndex()
 		assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
 	}
 	## "should add the value on point index"
-	testArrayAdd2()
+	function testArrayAdd2()
 	{
 		local test_array=("aa" "bb")
 		local expect_array=("aa" "cc" "bb")
@@ -117,7 +117,7 @@ testArrayGetIndex()
 ## "array add array"
 {
 	## "should add the array at the end of the array by default"
-	testArrayAddArray1()
+	function testArrayAddArray1()
 	{
 		local test_array=("aa")
 		local test_sub_array=("bb" "cc")
@@ -128,7 +128,7 @@ testArrayGetIndex()
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
 	}
 	## "should add the array on the point index"
-	testArrayAddArray2()
+	function testArrayAddArray2()
 	{
 		local test_array=("aa" "bb")
 		local test_sub_array=("cc" "dd")
@@ -143,7 +143,7 @@ testArrayGetIndex()
 ## "acquire a sub array"
 {
 	## "should get a sub array from current array by point index and length"
-	testArraySubArray()
+	function testArraySubArray()
 	{
 		local test_array=("aa" "bb" "cc" "dd")
 		local expect_sub_array=("bb" "cc")
@@ -154,7 +154,7 @@ testArrayGetIndex()
 	}
 
 	## "should get a sub array from current array by point from index"
-	testArraySubArrayFrom()
+	function testArraySubArrayFrom()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_sub_array=("bb" "cc")
@@ -170,7 +170,7 @@ testArrayGetIndex()
 ## "array move next"
 {
 	## "should move all the values to next one step by default"
-	testArrayMoveNext1()
+	function testArrayMoveNext1()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_array=("" "aa" "bb" "cc")
@@ -180,7 +180,7 @@ testArrayGetIndex()
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
 	}
 	## "should move the values from point index to next one step by default"
-	testArrayMoveNext2()
+	function testArrayMoveNext2()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_array=("aa" "" "bb" "cc")
@@ -190,7 +190,7 @@ testArrayGetIndex()
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
 	}
 	## "should move the values from point index to next point steps"
-	testArrayMoveNext3()
+	function testArrayMoveNext3()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_array=("aa" "" "" "bb" "cc")
@@ -200,7 +200,7 @@ testArrayGetIndex()
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
 	}
 	## "should not move the values when the from index over the length of array."
-	testArrayMoveNext4()
+	function testArrayMoveNext4()
 	{
 		local test_array=("aa" "bb")
 		local expect_array=("aa" "bb")
@@ -212,7 +212,7 @@ testArrayGetIndex()
 		assertEquals "The return value should be equal (2)" 2 $move_result
 	}
 	## "should not move the values when the move count is zero."
-	testArrayMoveNext5()
+	function testArrayMoveNext5()
 	{
 		local test_array=("aa" "bb")
 		local expect_array=("aa" "bb")

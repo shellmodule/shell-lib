@@ -1,1 +1,1 @@
-script: sh ./test/all_test.sh
+script: bash ./test/all_test.sh
