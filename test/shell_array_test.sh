@@ -167,13 +167,33 @@ function testArrayGetIndex()
 
 ## "remove values from array"
 {
-	## "should remove one value by point index"
-	function testArrayRemove()
+	## "should return a new array from second index by remove first value"
+	function testArrayRemove1()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("bb" "cc")
+
+		local result_sub_array=$(_array_remove "test_array" 0)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+	## "should return a new array by remove point index value"
+	function testArrayRemove2()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_sub_array=("aa" "cc")
 
 		local result_sub_array=$(_array_remove "test_array" 1)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+	## "should return a new array end with last second index by remove last value"
+	function testArrayRemove3()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("aa" "bb")
+
+		local result_sub_array=$(_array_remove "test_array" 2)
 
 		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
 	}

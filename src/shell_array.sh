@@ -163,6 +163,27 @@ function _array_sub_array_from()
 	return 1
 }
 
+function _array_remove()
+{
+	if [ $1 ]; then
+		eval local length=\${#$1[*]}
+		if [ $2 -ge 0 -a $2 -lt $length ]; then
+			eval let start_index=$2+1
+			eval let end_index=$length-1
+			if [ $2 -eq 0 ]; then
+				eval echo \${$1[*]:1}
+			elif [ $2 -eq $end_index ]; then
+				eval echo \${$1[*]:0:$end_index}
+			else
+				eval echo \${$1[*]:0:$2} \${$1[*]:$start_index:$end_index}
+			fi
+		else
+			eval echo \${$1[*]}
+		fi
+	fi 
+	return 1
+}
+
 # private method
 function __array_move_next()
 {
