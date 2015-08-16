@@ -169,13 +169,13 @@ function _array_remove()
 		eval local length=\${#$1[*]}
 		if [ $2 -ge 0 -a $2 -lt $length ]; then
 			eval let start_index=$2+1
-			eval let end_index=$length-1
+			eval let last_index=$length-1
 			if [ $2 -eq 0 ]; then
 				eval echo \${$1[*]:1}
-			elif [ $2 -eq $end_index ]; then
-				eval echo \${$1[*]:0:$end_index}
+			elif [ $2 -eq $last_index ]; then
+				eval echo \${$1[*]:0:$last_index}
 			else
-				eval echo \${$1[*]:0:$2} \${$1[*]:$start_index:$end_index}
+				eval echo \${$1[*]:0:$2} \${$1[*]:$start_index:$last_index}
 			fi
 		else
 			eval echo \${$1[*]}
@@ -191,6 +191,27 @@ function _array_remove_value()
 		if [ $? -eq 0 -a $index -ge 0 ]; then
 			local result=$(_array_remove $1 $index)
 			echo ${result[*]}
+		fi
+	fi
+	return 1
+}
+
+function _array_remove_range()
+{
+	if [ $1 ]; then
+		eval local length=\${#$1[*]}
+		eval let end_index=$2+$3
+		eval let last_index=$length-1
+		if [ $2 -ge 0 -a $end_index -le $length ]; then
+			if [ $2 -eq 0 ]; then
+				eval echo \${$1[*]:$end_index}
+			elif [ $end_index -eq $length ]; then
+				eval echo \${$1[*]:0:$2}
+			else
+				eval echo \${$1[*]:0:$2} \${$1[*]:$end_index:$last_index}
+			fi
+		else
+			eval echo \${$1[*]}
 		fi
 	fi
 	return 1
