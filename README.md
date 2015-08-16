@@ -1,4 +1,5 @@
 # shell-lib
 shell library
 
-Using travis-ci to build the system.
+The travis-ci address: https://travis-ci.org/shellmodule/shell-lib
+The circle-ci address: https://circleci.com/gh/shellmodule/shell-lib

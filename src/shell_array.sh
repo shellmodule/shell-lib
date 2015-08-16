@@ -1,7 +1,7 @@
 #!/bin/sh
 # file: src/shell_array.sh
 
-_array_is_empty()
+function _array_is_empty()
 {
 	if [ $1 ]; then
 		eval local length=\${#$1[*]}
@@ -16,7 +16,7 @@ _array_is_empty()
 	return 1
 }
 
-_array_contain()
+function _array_contain()
 {
 	if [ $1 -a $2 ]; then
 		local index=0
@@ -35,7 +35,7 @@ _array_contain()
 	return 1
 }
 
-_array_contain_array()
+function _array_contain_array()
 {
 	if [ $1 -a $2 ]; then
 		local index=0
@@ -55,7 +55,7 @@ _array_contain_array()
 	return 1
 }
 
-_array_size()
+function _array_size()
 {
 	if [ $1 ]; then
 		eval echo \${#$1[*]}
@@ -64,7 +64,7 @@ _array_size()
 	return 1
 }
 
-_array_get_value()
+function _array_get_value()
 {
 	if [ $1 -a $2 ]; then
 		eval local length=\${#$1[*]}
@@ -78,7 +78,7 @@ _array_get_value()
 	return 1
 }
 
-_array_get_index()
+function _array_get_index()
 {
 	if [ $1 -a $2 ]; then
 		local index=0
@@ -97,7 +97,7 @@ _array_get_index()
 	return 1
 }
 
-_array_add()
+function _array_add()
 {
 	if [ $1 -a $2 ]; then
 		eval local length=\${#$1[*]}
@@ -114,7 +114,7 @@ _array_add()
 	return 1
 }
 
-_array_add_array()
+function _array_add_array()
 {
 	if [ $1 -a $2 ]; then
 		eval local length=\${#$1[*]}
@@ -140,7 +140,7 @@ _array_add_array()
 	return 1
 }
 
-_array_sub_array()
+function _array_sub_array()
 {
 	if [ $1 ]; then
 		eval local length=\${#$1[*]}
@@ -152,7 +152,7 @@ _array_sub_array()
 	return 1
 }
 
-_array_sub_array_from()
+function _array_sub_array_from()
 {
 	if [ $1 ]; then
 		eval local length=\${#$1[*]}
@@ -164,7 +164,7 @@ _array_sub_array_from()
 }
 
 # private method
-__array_move_next()
+function __array_move_next()
 {
 	if [ $1 ]; then
 		local move_index=0
