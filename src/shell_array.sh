@@ -184,6 +184,18 @@ function _array_remove()
 	return 1
 }
 
+function _array_remove_value()
+{
+	if [ $1 -a $2 ]; then
+		local index=$(_array_get_index $1 $2)
+		if [ $? -eq 0 -a $index -ge 0 ]; then
+			local result=$(_array_remove $1 $index)
+			echo ${result[*]}
+		fi
+	fi
+	return 1
+}
+
 # private method
 function __array_move_next()
 {

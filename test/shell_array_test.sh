@@ -197,6 +197,17 @@ function testArrayGetIndex()
 
 		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
 	}
+
+	## "should return a new array by remove a value"
+	function testArrayRemoveValue()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("aa" "cc")
+
+		local result_sub_array=$(_array_remove_value "test_array" "bb")
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
 }
 
 # private method
