@@ -1,8 +1,1 @@
-before_script:
-	- echo "---------------start--------------"
-
-script:
-	- echo "hello"
-
-after_script:
-	- echo "-----------------end--------------"
+script: sh ./test/all_test.sh

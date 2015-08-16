@@ -3,5 +3,5 @@
 
 cd test
 
-sh ./shell_array_test.sh
-sh ./shell_file_test.sh
+bash ./shell_array_test.sh
+bash ./shell_file_test.sh
