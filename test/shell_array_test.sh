@@ -165,6 +165,20 @@ function testArrayGetIndex()
 	}
 }
 
+## "remove values from array"
+{
+	## "should remove one value by point index"
+	function testArrayRemove()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("aa" "cc")
+
+		local result_sub_array=$(_array_remove "test_array" 1)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+}
+
 # private method
 
 ## "array move next"
