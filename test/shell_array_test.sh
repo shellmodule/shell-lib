@@ -165,6 +165,84 @@ function testArrayGetIndex()
 	}
 }
 
+## "remove values from array"
+{
+	## "should return a new array from second index by remove first value"
+	function testArrayRemove1()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("bb" "cc")
+
+		local result_sub_array=$(_array_remove "test_array" 0)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+	## "should return a new array by remove point index value"
+	function testArrayRemove2()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("aa" "cc")
+
+		local result_sub_array=$(_array_remove "test_array" 1)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+	## "should return a new array end with last second index by remove last value"
+	function testArrayRemove3()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("aa" "bb")
+
+		local result_sub_array=$(_array_remove "test_array" 2)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+
+	## "should return a new array by remove a value"
+	function testArrayRemoveValue()
+	{
+		local test_array=("aa" "bb" "cc")
+		local expect_sub_array=("aa" "cc")
+
+		local result_sub_array=$(_array_remove_value "test_array" "bb")
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+
+	## "should return a new array by remove some values"
+	function testArrayRemoveValues()
+	{
+		local test_array=("aa" "bb" "cc" "dd")
+		local remove_array=("bb" "dd")
+		local expect_sub_array=("aa" "cc")
+
+		local result_sub_array=$(_array_remove_values "test_array" "remove_array")
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+
+	## "should return a new array by remvoe a range values"
+	function testArrayRemoveRange()
+	{
+		local test_array=("aa" "bb" "cc" "dd")
+		local expect_sub_array=("aa" "dd")
+
+		local result_sub_array=$(_array_remove_range "test_array" 1 2)
+
+		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+	}
+
+	## "should empty the array"
+	function testArrayClear()
+	{
+		local test_array=("aa" "bb" "cc")
+
+		_array_clear "test_array"
+
+		assertEquals "The result array length should be zero" ${#test_array[*]} 0
+	}
+}
+
 # private method
 
 ## "array move next"
