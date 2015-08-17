@@ -231,6 +231,16 @@ function testArrayGetIndex()
 
 		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
 	}
+
+	## "should empty the array"
+	function testArrayClear()
+	{
+		local test_array=("aa" "bb" "cc")
+
+		_array_clear "test_array"
+
+		assertEquals "The result array length should be zero" ${#test_array[*]} 0
+	}
 }
 
 # private method

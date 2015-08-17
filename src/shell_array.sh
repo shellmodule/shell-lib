@@ -235,6 +235,14 @@ function _array_remove_range()
 	return 1
 }
 
+function _array_clear()
+{
+	if [ $1 ]; then
+		eval $1=\(\)
+	fi
+	return 1
+}
+
 # private method
 function __array_move_next()
 {
