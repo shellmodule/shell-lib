@@ -196,6 +196,24 @@ function _array_remove_value()
 	return 1
 }
 
+function _array_remove_values()
+{
+	if [ $1 -a $2 ]; then
+		local index=0
+		eval local result_array=(\${$1[*]})
+		eval local remove_values_length=\${#$2[*]}
+		while [ $index -lt $remove_values_length ]; do
+			eval local item=\${$2[$index]}
+			if [ $item ]; then
+				result_array=($(_array_remove_value "result_array" $item))
+			fi
+			let index=$index+1
+		done
+		echo ${result_array[*]}
+	fi
+	return 1
+}
+
 function _array_remove_range()
 {
 	if [ $1 ]; then
