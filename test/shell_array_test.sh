@@ -99,8 +99,10 @@ function testArrayGetIndex()
 		local test_array=("aa")
 
 		_array_add "test_array" "bb"
+		local return_value=$?
 
 		assertEquals "The second value in test_array should be (bb)" "bb" ${test_array[1]}
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 	## "should add the value on point index"
 	function testArrayAdd2()
@@ -109,8 +111,10 @@ function testArrayGetIndex()
 		local expect_array=("aa" "cc" "bb")
 
 		_array_add "test_array" "cc" 1
+		local return_value=$?
 
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 }
 
@@ -124,8 +128,10 @@ function testArrayGetIndex()
 		local expect_array=("aa" "bb" "cc")
 
 		_array_add_array "test_array" "test_sub_array"
+		local return_value=$?
 
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 	## "should add the array on the point index"
 	function testArrayAddArray2()
@@ -135,8 +141,10 @@ function testArrayGetIndex()
 		local expect_array=("aa" "cc" "dd" "bb")
 
 		_array_add_array "test_array" "test_sub_array" 1
+		local return_value=$?
 
 		assertEquals "The test_array should be equal expect_array" "${expect_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 }
 
@@ -149,8 +157,10 @@ function testArrayGetIndex()
 		local expect_sub_array=("bb" "cc")
 
 		local result_sub_array=$(_array_sub_array "test_array" 1 2)
+		local return_value=$?
 
 		assertEquals "The result sub array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 
 	## "should get a sub array from current array by point from index"
@@ -160,86 +170,102 @@ function testArrayGetIndex()
 		local expect_sub_array=("bb" "cc")
 
 		local result_sub_array=$(_array_sub_array_from "test_array" 1)
+		local return_value=$?
 
 		assertEquals "The result sub array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 }
 
 ## "remove values from array"
 {
-	## "should return a new array from second index by remove first value"
+	## "should remove the point value by first index from the test array"
 	function testArrayRemove1()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_sub_array=("bb" "cc")
 
-		local result_sub_array=$(_array_remove "test_array" 0)
+		_array_remove "test_array" 0
+		local return_value=$?
 
-		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The test_array should be equal expect_sub_array" "${expect_sub_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
-	## "should return a new array by remove point index value"
+	## "should remove the point value from the test array"
 	function testArrayRemove2()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_sub_array=("aa" "cc")
 
-		local result_sub_array=$(_array_remove "test_array" 1)
+		_array_remove "test_array" 1
+		local return_value=$?
 
-		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The test_array should be equal expect_sub_array" "${expect_sub_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
-	## "should return a new array end with last second index by remove last value"
+	## "should remove the point value by last index from the test array"
 	function testArrayRemove3()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_sub_array=("aa" "bb")
 
-		local result_sub_array=$(_array_remove "test_array" 2)
+		_array_remove "test_array" 2
+		local return_value=$?
 
-		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The test_array should be equal expect_sub_array" "${expect_sub_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 
-	## "should return a new array by remove a value"
+	## "should remove the point value from the test array"
 	function testArrayRemoveValue()
 	{
 		local test_array=("aa" "bb" "cc")
 		local expect_sub_array=("aa" "cc")
 
-		local result_sub_array=$(_array_remove_value "test_array" "bb")
+		_array_remove_value "test_array" "bb"
+		local return_value=$?
 
-		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The test_array should be equal expect_sub_array" "${expect_sub_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 
-	## "should return a new array by remove some values"
+	## "should remove the point values from the test array"
 	function testArrayRemoveValues()
 	{
 		local test_array=("aa" "bb" "cc" "dd")
 		local remove_array=("bb" "dd")
 		local expect_sub_array=("aa" "cc")
 
-		local result_sub_array=$(_array_remove_values "test_array" "remove_array")
+		_array_remove_values "test_array" "remove_array"
+		local return_value=$?
 
-		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The test_array should be equal expect_sub_array" "${expect_sub_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 
-	## "should return a new array by remvoe a range values"
+	## "should remove the point values by the range from the test array"
 	function testArrayRemoveRange()
 	{
 		local test_array=("aa" "bb" "cc" "dd")
 		local expect_sub_array=("aa" "dd")
 
-		local result_sub_array=$(_array_remove_range "test_array" 1 2)
+		_array_remove_range "test_array" 1 2
+		local return_value=$?
 
-		assertEquals "The result array should be equal expect_sub_array" "${expect_sub_array[*]}" "${result_sub_array[*]}"
+		assertEquals "The test_array should be equal expect_sub_array" "${expect_sub_array[*]}" "${test_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 
-	## "should empty the array"
+	## "should empty the test array"
 	function testArrayClear()
 	{
 		local test_array=("aa" "bb" "cc")
 
 		_array_clear "test_array"
+		local return_value=$?
 
-		assertEquals "The result array length should be zero" ${#test_array[*]} 0
+		assertEquals "The test_array length should be zero" 0 ${#test_array[*]}
+		assertEquals "The return value should be equal zero" 0 $return_value
 	}
 }
 
