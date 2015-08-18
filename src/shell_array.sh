@@ -109,9 +109,9 @@ function _array_add()
 			fi
 		fi
 		eval $1[$insert_index]=$2
-		return 0
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_add_array()
@@ -135,9 +135,9 @@ function _array_add_array()
 			fi
 			let index=$index+1
 		done
-		return 0
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_sub_array()
@@ -148,8 +148,9 @@ function _array_sub_array()
 		let to_length=$to_length-1
 		if [ $to_length -gt $length ]; then $to_length=$length; fi
 		eval echo \${$1[*]:$2:$to_length}
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_sub_array_from()
@@ -159,8 +160,9 @@ function _array_sub_array_from()
 		if [ $2 -ge 0 -a $2 -lt $length ]; then
 			eval echo \${$1[*]:$2}
 		fi
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_remove()
@@ -171,17 +173,18 @@ function _array_remove()
 			eval let start_index=$2+1
 			eval let last_index=$length-1
 			if [ $2 -eq 0 ]; then
-				eval echo \${$1[*]:1}
+				eval $1=\(\${$1[*]:1}\)
 			elif [ $2 -eq $last_index ]; then
-				eval echo \${$1[*]:0:$last_index}
+				eval $1=\(\${$1[*]:0:$last_index}\)
 			else
-				eval echo \${$1[*]:0:$2} \${$1[*]:$start_index:$last_index}
+				eval $1=\(\${$1[*]:0:$2} \${$1[*]:$start_index:$last_index}\)
 			fi
 		else
-			eval echo \${$1[*]}
+			eval $1=\(\${$1[*]}\)
 		fi
-	fi 
-	return 1
+	else
+		return 1
+	fi
 }
 
 function _array_remove_value()
@@ -189,29 +192,28 @@ function _array_remove_value()
 	if [ $1 -a $2 ]; then
 		local index=$(_array_get_index $1 $2)
 		if [ $? -eq 0 -a $index -ge 0 ]; then
-			local result=$(_array_remove $1 $index)
-			echo ${result[*]}
+			_array_remove $1 $index
 		fi
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_remove_values()
 {
 	if [ $1 -a $2 ]; then
 		local index=0
-		eval local result_array=(\${$1[*]})
 		eval local remove_values_length=\${#$2[*]}
 		while [ $index -lt $remove_values_length ]; do
 			eval local item=\${$2[$index]}
 			if [ $item ]; then
-				result_array=($(_array_remove_value "result_array" $item))
+				_array_remove_value $1 $item
 			fi
 			let index=$index+1
 		done
-		echo ${result_array[*]}
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_remove_range()
@@ -222,25 +224,27 @@ function _array_remove_range()
 		eval let last_index=$length-1
 		if [ $2 -ge 0 -a $end_index -le $length ]; then
 			if [ $2 -eq 0 ]; then
-				eval echo \${$1[*]:$end_index}
+				eval $1=\(\${$1[*]:$end_index}\)
 			elif [ $end_index -eq $length ]; then
-				eval echo \${$1[*]:0:$2}
+				eval $1=\(\${$1[*]:0:$2}\)
 			else
-				eval echo \${$1[*]:0:$2} \${$1[*]:$end_index:$last_index}
+				eval $1=\(\${$1[*]:0:$2} \${$1[*]:$end_index:$last_index}\)
 			fi
 		else
-			eval echo \${$1[*]}
+			eval $1=\(\${$1[*]}\)
 		fi
+	else
+		return 1
 	fi
-	return 1
 }
 
 function _array_clear()
 {
 	if [ $1 ]; then
 		eval $1=\(\)
+	else
+		return 1
 	fi
-	return 1
 }
 
 # private method
