@@ -269,6 +269,21 @@ function testArrayGetIndex()
 	}
 }
 
+## "clone a new array from array"
+{
+	## "should return a new array from current array"
+	function testArrayClone()
+	{
+		local test_array=("aa" "bb" "cc")
+
+		local result_array=$(_array_clone "test_array")
+		local return_value=$?
+
+		assertEquals "The result array should be equal test array" "${test_array[*]}" "${result_array[*]}"
+		assertEquals "The return value should be equal zero" 0 $return_value
+	}
+}
+
 # private method
 
 ## "array move next"

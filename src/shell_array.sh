@@ -247,6 +247,15 @@ function _array_clear()
 	fi
 }
 
+function _array_clone()
+{
+	if [ $1 ]; then
+		eval echo \${$1[*]}
+	else
+		return 1
+	fi
+}
+
 # private method
 function __array_move_next()
 {
